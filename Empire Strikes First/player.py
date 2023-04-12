@@ -7,9 +7,9 @@ from settings import *
 class Player(pg.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack): #po =position, groups=assign the sprite to the group
         super().__init__(groups) #initiate the sprite group
-        self.image = pg.transform.rotozoom(pg.image.load('images/characters/vader/down_idle/down_idle_up.png').convert_alpha(), 0, 1)
-        #self.image = pg.transform.rotozoom(
-        #    pg.image.load('images/characters/wookie/down_idle/down_idle.png').convert_alpha(), 0, 1)
+        #self.image = pg.transform.rotozoom(pg.image.load('images/characters/vader/down_idle/down_idle_up.png').convert_alpha(), 0, 1)
+        self.image = pg.transform.rotozoom(
+            pg.image.load('images/characters/wookie/down_idle/down_idle.png').convert_alpha(), 0, 1)
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(-28, -30)   #Reduction in rectangle size to define hitbox.
 
@@ -30,14 +30,17 @@ class Player(pg.sprite.Sprite):
 
         self.obstacle_sprites = obstacle_sprites
 
-        #Weapon
+        #Weapon & Force
         self.create_attack = create_attack
         self.destroy_attack = destroy_attack
         self.weapon_index = 0
         self.weapon = list(weapon_data.keys())[self.weapon_index]
+        self.can_switch_force = True
+        self.force_switch_time = None
+        self.force_switch_duration_cooldown = 200
 
     def import_player_assets(self):
-         character_path = 'images/characters/vader'
+        character_path = 'images/characters/vader'
         #character_path = 'images/characters/wookie'
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
                            'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
@@ -82,6 +85,19 @@ class Player(pg.sprite.Sprite):
                 self.attacking = True
                 self.create_attack()
                 self.attack_time = pg.time.get_ticks()
+
+            #Change force ability
+            if keys[pg.K_d] and self.can_switch_force:
+                self.can_switch_force = False
+                self.force_switch_time = pg.time.get_ticks()
+
+                if self.weapon_index < len(list(weapon_data.keys()))-1:
+                    self.weapon_index += 1
+                else:
+                    self.weapon_index = 0
+                self.weapon = list(weapon_data.keys())[self.weapon_index]
+
+
 
     def get_status(self):
         #Idle Status
@@ -147,6 +163,11 @@ class Player(pg.sprite.Sprite):
                 self.attacking = False
                 self.destroy_attack()
 
+        if not self.can_switch_force:
+            if current_time - self.force_switch_time >= self.force_switch_duration_cooldown:
+                self.can_switch_force = True
+
+
     def animate(self):
         animation = self.animations[self.status]
 
@@ -164,7 +185,6 @@ class Player(pg.sprite.Sprite):
         self.get_status()
         self.animate()
         self.cooldowns()
-
         self.move(self.speed)
 
 

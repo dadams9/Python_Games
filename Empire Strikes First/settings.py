@@ -7,7 +7,11 @@ CAPTION = "Star Wars: Empire Strikes First"
 FILL_COLOR = 'white'
 
 #Weapons
-weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/lightsaber/full.png'}}
+weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/saber/full.png'},
+               'lightning_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/lightning_1/full.png'},
+               'drain_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/drain_1/full.png'}}
+#weapon_data = {'laser': {'cooldown': 100, 'damage': 15, 'graphic': 'images/wookie/laser/full.png'}}
+
 
 WORLD_MAP = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],

@@ -7,7 +7,8 @@ class Weapon(pg.sprite.Sprite):
         direction = player.status.split('_')[0]     #parse 'up_attack' to get just 'up'
 
         #Graphics
-        full_path = f'images/characters/vader/{player.weapon}/{direction}.png'
+        full_path = f'images/characters/vader/attacks/{player.weapon}/{direction}.png'
+        #full_path = f'images/characters/wookie/{player.weapon}/{direction}.png'
         self.image = pg.image.load(full_path).convert_alpha()
 
         #Placement
