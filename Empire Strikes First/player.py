@@ -22,7 +22,6 @@ class Player(pg.sprite.Sprite):
 
         #Movement
         self.direction = pg.math.Vector2()
-        self.speed = 3
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
@@ -38,6 +37,15 @@ class Player(pg.sprite.Sprite):
         self.can_switch_force = True
         self.force_switch_time = None
         self.force_switch_duration_cooldown = 200
+
+
+        #Stats
+        self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'force': 4, 'speed': 3}
+        self.health = self.stats['health']
+        self.energy = self.stats['energy']
+        self.speed = self.stats['speed']
+        self.experience = 0
+
 
     def import_player_assets(self):
         character_path = 'images/characters/vader'
@@ -96,6 +104,7 @@ class Player(pg.sprite.Sprite):
                 else:
                     self.weapon_index = 0
                 self.weapon = list(weapon_data.keys())[self.weapon_index]
+
 
 
 
