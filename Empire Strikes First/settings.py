@@ -27,10 +27,20 @@ TEXT_COLOR = '#EEEEEE'
 
 
 #Weapons
-weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/saber/full.png'},
-               'lightning_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/lightning_1/full.png'},
-               'drain_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/vader/attacks/drain_1/full.png'}}
+weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/characters/vader/attacks/saber/full.png'},
+               'lightning_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/characters/vader/attacks/lightning_1/right.png'},
+               'drain_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/characters/vader/attacks/drain_1/right.png'}}
 #weapon_data = {'laser': {'cooldown': 100, 'damage': 15, 'graphic': 'images/wookie/laser/full.png'}}
+
+force_data = {'push': {'strength': 1, 'cost': 10, 'graphic': 'images/characters/vader/attacks/particles/push/right.png'},
+              'pull': {'strength': 1, 'cost': 10, 'graphic': 'images/characters/vader/attacks/particles/pull/right.png'}}
+
+#Enemies
+enemy_data = {
+    'wookie': {'health': 150, 'exp': 100, 'damage': 30, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 2, 'attack_radius': 80, 'notice_radius': 400},
+    'chewy': {'health': 250, 'exp': 300, 'damage': 50, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 3, 'attack_radius': 100, 'notice_radius': 300}
+}
+
 
 
 WORLD_MAP = [

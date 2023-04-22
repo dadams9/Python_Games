@@ -1,27 +1,28 @@
 import pygame as pg
 import pygame.key
+from entity import Entity
 from support import *
 from settings import *
 
 
-class Player(pg.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack): #po =position, groups=assign the sprite to the group
+class Player(Entity):
+    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_force): #po =position, groups=assign the sprite to the group
         super().__init__(groups) #initiate the sprite group
-        #self.image = pg.transform.rotozoom(pg.image.load('images/characters/vader/down_idle/down_idle_up.png').convert_alpha(), 0, 1)
-        self.image = pg.transform.rotozoom(
-            pg.image.load('images/characters/wookie/down_idle/down_idle.png').convert_alpha(), 0, 1)
+        self.image = pg.transform.rotozoom(pg.image.load('images/characters/vader/down_idle/down_idle_up.png').convert_alpha(), 0, 1)
+        #self.image = pg.transform.rotozoom(
+        #    pg.image.load('images/characters/wookie/down_idle/down_idle.png').convert_alpha(), 0, 1)
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(-28, -30)   #Reduction in rectangle size to define hitbox.
 
         #Graphics setup
         self.import_player_assets()
         self.status = 'down'
-        self.frame_index = 0
-        self.animation_speed = 0.05
+        #self.frame_index = 0   #Shared with enemies
+        #self.animation_speed = 0.05    #shared with enemies
 
 
         #Movement
-        self.direction = pg.math.Vector2()
+        #self.direction = pg.math.Vector2() #shared with enemies
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
@@ -34,10 +35,17 @@ class Player(pg.sprite.Sprite):
         self.destroy_attack = destroy_attack
         self.weapon_index = 0
         self.weapon = list(weapon_data.keys())[self.weapon_index]
+        self.can_switch_weapon = True
+        self.weapon_switch_time = None
+        self.weapon_switch_duration_cooldown = 200
+
+        #Force
+        self.create_force = create_force
+        self.force_index = 0
+        self.force = list(force_data.keys())[self.force_index]
         self.can_switch_force = True
         self.force_switch_time = None
         self.force_switch_duration_cooldown = 200
-
 
         #Stats
         self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'force': 4, 'speed': 3}
@@ -88,16 +96,31 @@ class Player(pg.sprite.Sprite):
                 self.attacking = True
                 self.create_attack()
                 self.attack_time = pg.time.get_ticks()
+
             #Force input
             if keys[pg.K_f]:
                 self.attacking = True
-                self.create_attack()
+                style = list(force_data.keys())[self.force_index]
+                strength = list(force_data.values())[self.force_index]['strength'] + self.stats['force']
+                cost = list(force_data.values())[self.force_index]['cost']
+                self.create_force(style, strength, cost)
                 self.attack_time = pg.time.get_ticks()
 
             #Change force ability
             if keys[pg.K_d] and self.can_switch_force:
                 self.can_switch_force = False
                 self.force_switch_time = pg.time.get_ticks()
+
+                if self.force_index < len(list(force_data.keys()))-1:
+                    self.force_index += 1
+                else:
+                    self.force_index = 0
+                self.force = list(force_data.keys())[self.force_index]
+
+            #Change weapon
+            if keys[pg.K_w] and self.can_switch_weapon:
+                self.can_switch_weapon = False
+                self.weapon_switch_time = pg.time.get_ticks()
 
                 if self.weapon_index < len(list(weapon_data.keys()))-1:
                     self.weapon_index += 1
@@ -135,34 +158,34 @@ class Player(pg.sprite.Sprite):
             elif 'attack' in self.status:
                 self.status = self.status.replace('_attack', '')
 
-    def move(self, speed):
-        #Make sure that the length of the vector is always 1
-        if self.direction.magnitude() != 0:
-            self.direction = self.direction.normalize()
-        #Multiply the vector by the speed
-
-        self.hitbox.x += self.direction.x * speed
-        self.collision('horizontal')
-        self.hitbox.y += self.direction.y * speed
-        self.collision('vertical')
-        self.rect.center = self.hitbox.center
-
-    def collision(self, direction):
-        if direction == "horizontal":
-            for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):      #Tells us if there is a collision between the two rectangles
-                    if self.direction.x > 0:    #moving to the right
-                        self.hitbox.right = sprite.hitbox.left  #Make the right side of player = the left of the obstacle
-                    if self.direction.x < 0:    #moving to the left
-                        self.hitbox.left = sprite.hitbox.right  #Make the left side of the player = the right of the obstacle
-
-        if direction == "vertical":
-            for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):
-                    if self.direction.y > 0:     #moving down
-                        self.hitbox.bottom = sprite.hitbox.top  #Make the bottom of player = to top of obstacle
-                    if self.direction.y < 0:     #moving up
-                        self.hitbox.top = sprite.hitbox.bottom  #make the top of the player = to the bottom of obstacle
+    # def move(self, speed):
+    #     #Make sure that the length of the vector is always 1
+    #     if self.direction.magnitude() != 0:
+    #         self.direction = self.direction.normalize()
+    #     #Multiply the vector by the speed
+    #
+    #     self.hitbox.x += self.direction.x * speed
+    #     self.collision('horizontal')
+    #     self.hitbox.y += self.direction.y * speed
+    #     self.collision('vertical')
+    #     self.rect.center = self.hitbox.center
+    #
+    # def collision(self, direction):
+    #     if direction == "horizontal":
+    #         for sprite in self.obstacle_sprites:
+    #             if sprite.hitbox.colliderect(self.hitbox):      #Tells us if there is a collision between the two rectangles
+    #                 if self.direction.x > 0:    #moving to the right
+    #                     self.hitbox.right = sprite.hitbox.left  #Make the right side of player = the left of the obstacle
+    #                 if self.direction.x < 0:    #moving to the left
+    #                     self.hitbox.left = sprite.hitbox.right  #Make the left side of the player = the right of the obstacle
+    #
+    #     if direction == "vertical":
+    #         for sprite in self.obstacle_sprites:
+    #             if sprite.hitbox.colliderect(self.hitbox):
+    #                 if self.direction.y > 0:     #moving down
+    #                     self.hitbox.bottom = sprite.hitbox.top  #Make the bottom of player = to top of obstacle
+    #                 if self.direction.y < 0:     #moving up
+    #                     self.hitbox.top = sprite.hitbox.bottom  #make the top of the player = to the bottom of obstacle
 
     def cooldowns(self):
         current_time = pg.time.get_ticks()
@@ -171,6 +194,10 @@ class Player(pg.sprite.Sprite):
             if current_time - self.attack_time >= self.attack_cooldown:
                 self.attacking = False
                 self.destroy_attack()
+
+        if not self.can_switch_weapon:
+            if current_time - self.weapon_switch_time >= self.weapon_switch_duration_cooldown:
+                self.can_switch_weapon = True
 
         if not self.can_switch_force:
             if current_time - self.force_switch_time >= self.force_switch_duration_cooldown:
