@@ -1,4 +1,5 @@
 import pygame as pg
+from support import *
 
 class Entity(pg.sprite.Sprite):
     def __init__(self, groups):
@@ -36,3 +37,13 @@ class Entity(pg.sprite.Sprite):
                         self.hitbox.bottom = sprite.hitbox.top  #Make the bottom of player = to top of obstacle
                     if self.direction.y < 0:     #moving up
                         self.hitbox.top = sprite.hitbox.bottom  #make the top of the player = to the bottom of obstacle
+
+    def import_character_graphics(self, name):
+        character_path = f'images/characters/{name}'
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
+                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
+                           'up_attack': [], 'down_attack': [], 'left_attack': [], 'right_attack': []}
+
+        for animation in self.animations.keys():
+            full_path = character_path + '/' + animation
+            self.animations[animation] = import_folder(full_path)

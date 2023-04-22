@@ -9,13 +9,12 @@ class Player(Entity):
     def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_force): #po =position, groups=assign the sprite to the group
         super().__init__(groups) #initiate the sprite group
         self.image = pg.transform.rotozoom(pg.image.load('images/characters/vader/down_idle/down_idle_up.png').convert_alpha(), 0, 1)
-        #self.image = pg.transform.rotozoom(
-        #    pg.image.load('images/characters/wookie/down_idle/down_idle.png').convert_alpha(), 0, 1)
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(-28, -30)   #Reduction in rectangle size to define hitbox.
 
         #Graphics setup
-        self.import_player_assets()
+        self.import_character_graphics('vader')
+        #self.import_player_assets()
         self.status = 'down'
         #self.frame_index = 0   #Shared with enemies
         #self.animation_speed = 0.05    #shared with enemies
@@ -55,16 +54,16 @@ class Player(Entity):
         self.experience = 0
 
 
-    def import_player_assets(self):
-        character_path = 'images/characters/vader'
-        #character_path = 'images/characters/wookie'
-        self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
-                           'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
-                           'up_attack': [], 'down_attack': [], 'left_attack': [], 'right_attack': []}
-
-        for animation in self.animations.keys():
-            full_path = character_path + '/' + animation
-            self.animations[animation] = import_folder(full_path)
+    # def import_player_assets(self):
+    #     character_path = 'images/characters/vader'
+    #     #character_path = 'images/characters/wookie'
+    #     self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
+    #                        'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
+    #                        'up_attack': [], 'down_attack': [], 'left_attack': [], 'right_attack': []}
+    #
+    #     for animation in self.animations.keys():
+    #         full_path = character_path + '/' + animation
+    #         self.animations[animation] = import_folder(full_path)
 
     def input(self):
         #Prevent the player from doing anything while attacking
