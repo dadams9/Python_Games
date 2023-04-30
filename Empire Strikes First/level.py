@@ -8,6 +8,7 @@ from random import choice
 from weapon import Weapon
 from ui import UI
 from enemy import Enemy
+from enemy_weapon import EnemyWeapon
 
 class Level:
     def __init__(self):
@@ -23,9 +24,14 @@ class Level:
 
         #Attack Sprites
         self.current_attack = None
+        self.current_enemy_attack = None
 
         #User Interface
         self.ui = UI()
+
+        # Create list of enemies? I put this in here, maybe not needed
+        self.enemies = []
+
 
     def create_map(self):
         layouts = {
@@ -37,6 +43,8 @@ class Level:
         graphics = {
             'statue': import_folder('map/Objects')
         }
+
+        enemy_list = []
         for style, layout in layouts.items():
             for row_index, row in enumerate(layout):
                 for col_index, col in enumerate(row):
@@ -64,9 +72,21 @@ class Level:
                             else:
                                 if col == '239': enemy_name = 'wookie'
                                 elif col == '20': enemy_name = 'chewy'
-                                Enemy(enemy_name, (x, y), [self.visible_sprites])
+                                Enemy(enemy_name,
+                                      (x, y),
+                                      [self.visible_sprites],
+                                      self.obstacle_sprites,
+                                      self.create_enemy_attack,
+                                      self.destroy_enemy_attack)
 
-
+                                enemy_list.append(Enemy(enemy_name,
+                                      (x, y),
+                                      [self.visible_sprites],
+                                      self.obstacle_sprites,
+                                      self.create_enemy_attack,
+                                      self.destroy_enemy_attack))
+        self.enemies = enemy_list
+        debug(self.enemies)
         #         if col == 'x':
         #             Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
         #         elif col == 'p':
@@ -75,6 +95,15 @@ class Level:
 
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
+
+    def create_enemy_attack(self):
+        self.current_enemy_attack = EnemyWeapon(self.enemies, [self.visible_sprites])
+
+    def destroy_enemy_attack(self):
+        if self.current_enemy_attack:
+            self.current_enemy_attack.kill()
+        self.current_enemy_attack = None
+
 
     def create_force(self, style, strength, cost):
         print(style)
@@ -90,6 +119,7 @@ class Level:
         # Update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.visible_sprites.enemy_update(self.player)
         self.ui.display(self.player)
         #debug(self.player.status)
 
@@ -120,3 +150,9 @@ class YSortCameraGroup(pg.sprite.Group):
         for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
             offset_position = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_position)
+
+    def enemy_update(self, player):
+        enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, 'sprite_type') and sprite.sprite_type == 'enemy']
+        for enemy in enemy_sprites:
+            enemy.enemy_update(player)
+            #enemy.update()

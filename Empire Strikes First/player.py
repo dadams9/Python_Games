@@ -20,11 +20,11 @@ class Player(Entity):
         #self.animation_speed = 0.05    #shared with enemies
 
 
-        #Movement
-        #self.direction = pg.math.Vector2() #shared with enemies
-        self.attacking = False
-        self.attack_cooldown = 400
-        self.attack_time = None
+        #Movement #shared with enemies
+        #self.direction = pg.math.Vector2()
+        #self.attacking = False
+        #self.attack_cooldown = 400
+        #self.attack_time = None
 
 
         self.obstacle_sprites = obstacle_sprites

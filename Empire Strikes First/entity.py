@@ -6,7 +6,16 @@ class Entity(pg.sprite.Sprite):
         super().__init__(groups)
         self.frame_index = 0
         self.animation_speed = 0.05
+
+
+        #Movement
         self.direction = pg.math.Vector2()
+        self.attacking = False
+        self.attack_cooldown = 400
+        self.attack_time = None
+
+        #Common Attack
+
 
 
     def move(self, speed):
