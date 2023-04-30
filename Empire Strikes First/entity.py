@@ -42,7 +42,8 @@ class Entity(pg.sprite.Sprite):
         character_path = f'images/characters/{name}'
         self.animations = {'up': [], 'down': [], 'left': [], 'right': [],
                            'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': [],
-                           'up_attack': [], 'down_attack': [], 'left_attack': [], 'right_attack': []}
+                           'up_attack': [], 'down_attack': [], 'left_attack': [], 'right_attack': [],
+                           'move': [], 'attack': [], 'idle': []}
 
         for animation in self.animations.keys():
             full_path = character_path + '/' + animation

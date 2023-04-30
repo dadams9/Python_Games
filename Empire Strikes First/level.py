@@ -64,7 +64,10 @@ class Level:
                             else:
                                 if col == '239': enemy_name = 'wookie'
                                 elif col == '20': enemy_name = 'chewy'
-                                Enemy(enemy_name, (x, y), [self.visible_sprites])
+                                Enemy(enemy_name,
+                                      (x, y),
+                                      [self.visible_sprites],
+                                      self.obstacle_sprites)
 
 
         #         if col == 'x':
@@ -90,6 +93,7 @@ class Level:
         # Update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.visible_sprites.enemy_update(self.player)
         self.ui.display(self.player)
         #debug(self.player.status)
 
@@ -120,3 +124,8 @@ class YSortCameraGroup(pg.sprite.Group):
         for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
             offset_position = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_position)
+
+    def enemy_update(self, player):
+        enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, 'sprite_type') and sprite.sprite_type == 'enemy']
+        for enemy in enemy_sprites:
+            enemy.enemy_update(player)
