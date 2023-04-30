@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.0" name="Object_Images" tilewidth="67" tileheight="128" tilecount="6" columns="0">
+<tileset version="1.10" tiledversion="1.10.0" name="Object_Images" tilewidth="67" tileheight="65" tilecount="7" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="9">
   <image width="32" height="63" source="../graphics_downloads/stone_statue.gif"/>
@@ -17,6 +17,9 @@
   <image width="32" height="63" source="../graphics_downloads/stone_statue2.png"/>
  </tile>
  <tile id="19">
-  <image width="64" height="128" source="../../Game 1/map/Objects/stone_statue_64x128.png"/>
+  <image source="../../Game 1/map/Objects/stone_statue_64x128.png"/>
+ </tile>
+ <tile id="20">
+  <image width="64" height="64" source="../../Empire Strikes First/images/characters/wookie/down_idle/down_idle.png"/>
  </tile>
 </tileset>

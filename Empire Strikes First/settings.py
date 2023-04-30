@@ -37,8 +37,8 @@ force_data = {'push': {'strength': 1, 'cost': 10, 'graphic': 'images/characters/
 
 #Enemies
 enemy_data = {
-    'wookie': {'health': 150, 'exp': 100, 'damage': 30, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 1.5, 'resistance': 2, 'attack_radius': 80, 'notice_radius': 300},
-    'chewy': {'health': 250, 'exp': 300, 'damage': 50, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 1.5, 'resistance': 2, 'attack_radius': 100, 'notice_radius': 300}
+    'wookie': {'health': 200, 'exp': 100, 'damage': 30, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 1.5, 'resistance': 2, 'attack_radius': 80, 'notice_radius': 300},
+    'chewy': {'health': 300, 'exp': 300, 'damage': 50, 'attack_type': 'bowcaster', 'attack_sound': 'audio_path', 'speed': 1.5, 'resistance': 2, 'attack_radius': 100, 'notice_radius': 300}
 }
 
 
