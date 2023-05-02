@@ -32,8 +32,8 @@ weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/chara
                'drain_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/characters/vader/attacks/drain_1/right.png'}}
 #weapon_data = {'laser': {'cooldown': 100, 'damage': 15, 'graphic': 'images/wookie/laser/full.png'}}
 
-force_data = {'push': {'strength': 1, 'cost': 10, 'graphic': 'images/characters/vader/attacks/particles/push/right.png'},
-              'pull': {'strength': 1, 'cost': 10, 'graphic': 'images/characters/vader/attacks/particles/pull/right.png'}}
+force_data = {'push': {'strength': 0, 'cost': 10, 'graphic': 'images/particles/force/push/push_1/right/force_push_4.png'},
+              'pull': {'strength': 0, 'cost': 10, 'graphic': 'images/particles/force/push/push_1/left/force_push-12.png'}}
 
 #Enemies
 enemy_data = {
