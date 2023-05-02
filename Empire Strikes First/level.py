@@ -8,6 +8,8 @@ from random import choice
 from weapon import Weapon
 from ui import UI
 from enemy import Enemy
+from particles import AnimationPlayer
+from random import randint
 
 class Level:
     def __init__(self):
@@ -28,6 +30,9 @@ class Level:
 
         #User Interface
         self.ui = UI()
+
+        #particles
+        self.animation_player = AnimationPlayer()
 
     def create_map(self):
         layouts = {
@@ -99,6 +104,10 @@ class Level:
                 if collision_sprites: #if we have any collision
                     for target_sprite in collision_sprites: #Now we finally have the sprite colliding with our weapon
                         if target_sprite.sprite_type == 'grass':
+                            position = target_sprite.rect.center
+                            offset = pg.math.Vector2(0, 55)
+                            for leaf in range(randint(3, 6)):
+                                self.animation_player.create_grass_particles(position-offset, [self.visible_sprites])
                             target_sprite.kill()
                         elif target_sprite.sprite_type == 'enemy':
                             target_sprite.get_damage(self.player, attack_sprite.sprite_type)
