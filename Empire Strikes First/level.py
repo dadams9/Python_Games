@@ -75,7 +75,8 @@ class Level:
                                       (x, y),
                                       [self.visible_sprites, self.attackable_sprites],
                                       self.obstacle_sprites,
-                                      self.damage_player)
+                                      self.damage_player,
+                                      self.trigger_death_particles)
 
 
         #         if col == 'x':
@@ -119,6 +120,10 @@ class Level:
             self.player.vulnerable = False
             self.player.hurt_time = pg.time.get_ticks()
             #spawn particles
+            self.animation_player.create_particles(attack_type, self.player.rect.center, [self.visible_sprites])
+
+    def trigger_death_particles(self, position, particle_type):
+        self.animation_player.create_particles(particle_type, position, [self.visible_sprites])
 
     def run(self):
         # Update and draw the game

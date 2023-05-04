@@ -11,7 +11,17 @@ class AnimationPlayer:
                        'push_1_right': import_folder('images/particles/force/push/push_1/right'),
                        'push_1_left': import_folder('images/particles/force/push/push_1/left'),
                        'push_1_up': import_folder('images/particles/force/push/push_1/up'),
-                       'push_1_down': import_folder('images/particles/force/push/push_1/down')
+                       'push_1_down': import_folder('images/particles/force/push/push_1/down'),
+
+                        #Enemy Attacks
+                        'bowcaster': import_folder('images/particles/lasers/bowcaster_right/'),
+                        'bowcaster_left': import_folder('images/particles/lasers/bowcaster_left/'),
+                        'bowcaster_up': import_folder('images/particles/lasers/bowcaster_up/'),
+                        'bowcaster_down': import_folder('images/particles/lasers/bowcaster_down/'),
+
+                        #Enemy Deaths
+                        'wookie': import_folder('images/particles/enemy_deaths/wookie/'),
+                        'chewy': import_folder('images/particles/enemy_deaths/chewy/')
         }
 
     def reflect_images(self, frames):
@@ -27,6 +37,9 @@ class AnimationPlayer:
         animation_frames = choice(self.frames['leaf'])
         ParticleEffect(position, animation_frames, groups)
 
+    def create_particles(self, animation_type, position, groups):
+        animation_frames = self.frames[animation_type]
+        ParticleEffect(position, animation_frames, groups)
 
 class ParticleEffect(pg.sprite.Sprite):
     def __init__(self, position, animation_frames, groups):
