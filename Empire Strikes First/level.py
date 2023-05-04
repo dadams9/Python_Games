@@ -10,6 +10,7 @@ from ui import UI
 from enemy import Enemy
 from particles import AnimationPlayer
 from random import randint
+from force import ForcePlayer
 
 class Level:
     def __init__(self):
@@ -33,6 +34,7 @@ class Level:
 
         #particles
         self.animation_player = AnimationPlayer()
+        self.force_player = ForcePlayer(self.animation_player)
 
     def create_map(self):
         layouts = {
@@ -89,9 +91,13 @@ class Level:
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
 
     def create_force(self, style, strength, cost):
-        print(style)
-        print(strength)
-        print(cost)
+        if style == 'heal': #heal
+            self.force_player.heal(self.player, strength, cost, [self.visible_sprites])
+            pass
+
+        if style == 'pull':
+            pass
+
 
     def destroy_attack(self):
         if self.current_attack:
