@@ -108,7 +108,8 @@ class Player(Entity):
                 style = list(force_data.keys())[self.force_index]
                 strength = list(force_data.values())[self.force_index]['strength'] + self.stats['force']
                 cost = list(force_data.values())[self.force_index]['cost']
-                self.create_force(style, strength, cost)
+                level = list(force_data.values())[self.force_index]['level']
+                self.create_force(style, strength, cost, level)
                 self.attack_time = pg.time.get_ticks()
 
             #Change force ability
@@ -238,9 +239,14 @@ class Player(Entity):
         weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
 
+    def get_full_force_damage(self):
+        base_damage = self.stats['force']
+        force_damage = force_data[self.force]['strength']
+        return force_damage + base_damage
+
     def energy_recovery(self):
         if self.energy < self.stats['energy']:
-            self.energy += .005 * self.stats['magic']
+            self.energy += .005 * self.stats['force']
         else:
             self.energy = self.stats['energy']
 

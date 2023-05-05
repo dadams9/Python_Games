@@ -90,13 +90,14 @@ class Level:
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
 
-    def create_force(self, style, strength, cost):
+    def create_force(self, style, strength, cost, level):
         if style == 'heal': #heal
             self.force_player.heal(self.player, strength, cost, [self.visible_sprites])
             pass
 
-        if style == 'pull':
-            pass
+        if style == 'lightning':
+            self.force_player.lightning(self.player, cost, level, [self.visible_sprites, self.attack_sprites])
+
 
 
     def destroy_attack(self):

@@ -12,6 +12,10 @@ class AnimationPlayer:
                        'push_1_left': import_folder('images/particles/force/push/push_1/left'),
                        'push_1_up': import_folder('images/particles/force/push/push_1/up'),
                        'push_1_down': import_folder('images/particles/force/push/push_1/down'),
+                       'lightning_1_right': import_folder('images/particles/force/lightning/lightning_1/right/'),
+                       'lightning_1_left': import_folder('images/particles/force/lightning/lightning_1/left/'),
+                       'lightning_1_up': import_folder('images/particles/force/lightning/lightning_1/up/'),
+                       'lightning_1_down': import_folder('images/particles/force/lightning/lightning_1/down/'),
 
                         #Enemy Attacks
                         'bowcaster': import_folder('images/particles/lasers/bowcaster_right/'),
@@ -41,6 +45,7 @@ class AnimationPlayer:
         animation_frames = self.frames[animation_type]
         ParticleEffect(position, animation_frames, groups)
 
+
 class ParticleEffect(pg.sprite.Sprite):
     def __init__(self, position, animation_frames, groups):
         super().__init__(groups)
@@ -49,6 +54,7 @@ class ParticleEffect(pg.sprite.Sprite):
         self.frames = animation_frames
         self.image = self.frames[self.frame_index]
         self.rect = self.image.get_rect(center=position)
+        self.sprite_type = 'force'
 
     def animate(self):
         self.frame_index += self.animation_speed
