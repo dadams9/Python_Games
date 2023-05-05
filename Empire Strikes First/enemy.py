@@ -110,13 +110,19 @@ class Enemy(Entity):
             if current_time - self.hit_time >= self.invincibility_duration:
                 self.vulnerable = True
 
-    def get_damage(self, player, attack_type):
+    def get_damage(self, player, attack_type, force_type = 'none'):
         self.direction = self.get_player_distance_direction(player)[1]
         if self.vulnerable:
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
-            else:
-                self.health -= player.get_full_force_damage()
+            elif attack_type == 'force':
+                if force_type == 'drain':
+                    player.health += 5
+                    if player.health >= player.stats['health']:
+                        player.health = player.stats['health']
+                    self.health -= player.get_full_force_damage()
+                else:
+                    self.health -= player.get_full_force_damage()
         self.hit_time = pg.time.get_ticks()
         self.vulnerable = False
 

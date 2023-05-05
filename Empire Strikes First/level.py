@@ -93,10 +93,15 @@ class Level:
     def create_force(self, style, strength, cost, level):
         if style == 'heal': #heal
             self.force_player.heal(self.player, strength, cost, [self.visible_sprites])
-            pass
 
         if style == 'lightning':
             self.force_player.lightning(self.player, cost, level, [self.visible_sprites, self.attack_sprites])
+
+        if style == 'push':
+            self.force_player.push(self.player, cost, level, [self.visible_sprites, self.attack_sprites])
+
+        if style == 'drain':
+            self.force_player.drain(self.player, cost, level, [self.visible_sprites, self.attack_sprites])
 
 
 
@@ -118,7 +123,7 @@ class Level:
                                 self.animation_player.create_grass_particles(position-offset, [self.visible_sprites])
                             target_sprite.kill()
                         elif target_sprite.sprite_type == 'enemy':
-                            target_sprite.get_damage(self.player, attack_sprite.sprite_type)
+                            target_sprite.get_damage(self.player, attack_sprite.sprite_type, self.force_player.force_type)
 
 
     def damage_player(self, amount, attack_type):

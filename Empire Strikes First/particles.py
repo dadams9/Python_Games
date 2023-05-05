@@ -8,14 +8,18 @@ class AnimationPlayer:
         #example:
         self.frames = {
                        #Force Level 1
-                       'push_1_right': import_folder('images/particles/force/push/push_1/right'),
-                       'push_1_left': import_folder('images/particles/force/push/push_1/left'),
-                       'push_1_up': import_folder('images/particles/force/push/push_1/up'),
-                       'push_1_down': import_folder('images/particles/force/push/push_1/down'),
-                       'lightning_1_right': import_folder('images/particles/force/lightning/lightning_1/right/'),
-                       'lightning_1_left': import_folder('images/particles/force/lightning/lightning_1/left/'),
-                       'lightning_1_up': import_folder('images/particles/force/lightning/lightning_1/up/'),
-                       'lightning_1_down': import_folder('images/particles/force/lightning/lightning_1/down/'),
+                       'push_right': import_folder('images/particles/force/push/right'),
+                       'push_left': import_folder('images/particles/force/push/left'),
+                       'push_up': import_folder('images/particles/force/push/up'),
+                       'push_down': import_folder('images/particles/force/push/down'),
+                       'lightning_right': import_folder('images/particles/force/lightning/right/'),
+                       'lightning_left': import_folder('images/particles/force/lightning/left/'),
+                       'lightning_up': import_folder('images/particles/force/lightning/up/'),
+                       'lightning_down': import_folder('images/particles/force/lightning/down/'),
+                       'drain_right': import_folder('images/particles/force/drain/right/'),
+                       'drain_left': import_folder('images/particles/force/drain/left/'),
+                       'drain_up': import_folder('images/particles/force/drain/up/'),
+                       'drain_down': import_folder('images/particles/force/drain/down/'),
 
                         #Enemy Attacks
                         'bowcaster': import_folder('images/particles/lasers/bowcaster_right/'),

@@ -32,9 +32,11 @@ weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/chara
                'drain_1': {'cooldown': 100, 'damage': 15, 'graphic': 'images/characters/vader/attacks/drain_1/right.png'}}
 #weapon_data = {'laser': {'cooldown': 100, 'damage': 15, 'graphic': 'images/wookie/laser/full.png'}}
 
-force_data = {'push': {'strength': 0, 'cost': 10, 'level': 1, 'graphic': 'images/particles/force/push/push_1/right/force_push_4.png'},
-              'pull': {'strength': 0, 'cost': 10, 'level': 1, 'graphic': 'images/particles/force/push/push_1/left/force_push-12.png'},
-              'lightning': {'strength': 20, 'cost': 0, 'level': 1, 'graphic': 'images/particles/force/lightning/lightning_1/right/lightning_particles-3.png'}}
+force_data = {'push': {'strength': 0, 'cost': 2, 'level': 1, 'graphic': 'images/particles/force/push/right/force_push_4.png'},
+              'lightning': {'strength': 20, 'cost': 5, 'level': 1, 'graphic': 'images/particles/force/lightning/right/lightning_particles-3.png'},
+              'drain': {'strength': 10, 'cost': 0, 'level': 1, 'graphic': 'images/particles/force/drain/right/drain-1.png'}}
+#'pull': {'strength': 0, 'cost': 2, 'level': 1, 'graphic': 'images/particles/force/push/left/force_push-12.png'},
+
 
 #Enemies
 enemy_data = {
