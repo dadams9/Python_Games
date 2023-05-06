@@ -48,10 +48,12 @@ class Player(Entity):
 
         #Stats
         self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'force': 4, 'speed': 3}
+        self.max_stats = {'health': 300, 'energy': 140, 'attack': 20, 'force': 10, 'speed': 6}
+        self.upgrade_cost = {'health': 100, 'energy': 100, 'attack': 100, 'force': 100, 'speed': 100}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
         self.speed = self.stats['speed']
-        self.experience = 0
+        self.experience = 10000
 
 
         #damage timer
@@ -244,6 +246,12 @@ class Player(Entity):
         force_damage = force_data[self.force]['strength']
         return force_damage + base_damage
 
+    def get_cost_by_index(self, index):
+        return list(self.upgrade_cost.values())[index]
+
+    def get_value_by_index(self, index):
+        return list(self.stats.values())[index]
+
     def energy_recovery(self):
         if self.energy < self.stats['energy']:
             self.energy += .005 * self.stats['force']
@@ -255,7 +263,7 @@ class Player(Entity):
         self.get_status()
         self.animate()
         self.cooldowns()
-        self.move(self.speed)
+        self.move(self.stats['speed'])
         self.energy_recovery()
 
 

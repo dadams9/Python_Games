@@ -11,13 +11,19 @@ BAR_HEIGHT = 20
 HEALTH_BAR_WIDTH = 200
 ENERGY_BAR_WIDTH = 200
 ITEM_BOX_SIZE = 80
-UI_FONT = "Arial" #pg.font.SysFont("Arial", 18)
+UI_FONT = "Consolas" #pg.font.SysFont("Arial", 18)
 UI_FONT_SIZE = 18
 
 #UI Colors
 HEALTH_COLOR = 'red'
 ENERGY_COLOR = 'blue'
 UI_BORDER_COLOR_ACTIVE = 'gold'
+
+#Upgrade Menu
+TEXT_COLOR_SELECTED = '#111111' #red : '#FF0000'
+BAR_COLOR = '#EEEEEE'
+BAR_COLOR_SELECTED = '#111111'
+UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
 
 #General Colors
 WATER_COLOR = '#71ddee'
@@ -34,7 +40,7 @@ weapon_data = {'saber': {'cooldown': 100, 'damage': 15, 'graphic': 'images/chara
 
 force_data = {'push': {'strength': 0, 'cost': 2, 'level': 1, 'graphic': 'images/particles/force/push/right/force_push_4.png'},
               'lightning': {'strength': 20, 'cost': 5, 'level': 1, 'graphic': 'images/particles/force/lightning/right/lightning_particles-3.png'},
-              'drain': {'strength': 10, 'cost': 0, 'level': 1, 'graphic': 'images/particles/force/drain/right/drain-1.png'}}
+              'drain': {'strength': 10, 'cost': 10, 'level': 1, 'graphic': 'images/particles/force/drain/right/drain-1.png'}}
 #'pull': {'strength': 0, 'cost': 2, 'level': 1, 'graphic': 'images/particles/force/push/left/force_push-12.png'},
 
 

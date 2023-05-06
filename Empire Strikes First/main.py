@@ -22,6 +22,10 @@ class Game:
                 if event.type == pg.QUIT:
                     pg.quit()
                     sys.exit()
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_u:
+                        self.level.toggle_menu()
+
             self.screen.fill(FILL_COLOR)
             self.level.run()        #Call the run method of the level instance
             pg.display.update()

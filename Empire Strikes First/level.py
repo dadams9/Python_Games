@@ -11,11 +11,13 @@ from enemy import Enemy
 from particles import AnimationPlayer
 from random import randint
 from force import ForcePlayer
+from upgrade import Upgrade
 
 class Level:
     def __init__(self):
         #get the display surface
         self.display_surface = pg.display.get_surface() #Gets the display surface from anywhere in the code
+        self.game_paused = False
 
         # Sprite group setup
         self.visible_sprites = YSortCameraGroup()       #Custom sprite group
@@ -31,6 +33,7 @@ class Level:
 
         #User Interface
         self.ui = UI()
+        self.upgrade = Upgrade(self.player)
 
         #particles
         self.animation_player = AnimationPlayer()
@@ -78,7 +81,8 @@ class Level:
                                       [self.visible_sprites, self.attackable_sprites],
                                       self.obstacle_sprites,
                                       self.damage_player,
-                                      self.trigger_death_particles)
+                                      self.trigger_death_particles,
+                                      self.add_xp)
 
 
         #         if col == 'x':
@@ -137,14 +141,24 @@ class Level:
     def trigger_death_particles(self, position, particle_type):
         self.animation_player.create_particles(particle_type, position, [self.visible_sprites])
 
+    def add_xp(self, amount):
+        self.player.experience += amount
+
+
+    def toggle_menu(self):
+        self.game_paused = not self.game_paused
+
     def run(self):
-        # Update and draw the game
         self.visible_sprites.custom_draw(self.player)
-        self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player)
-        self.player_attack_logic()
         self.ui.display(self.player)
-        #debug(self.player.status)
+        if self.game_paused:
+            #display upgrade menu
+            self.upgrade.display()
+        else:
+            self.visible_sprites.update()
+            self.player_attack_logic()
+            self.visible_sprites.enemy_update(self.player)
+
 
 
 class YSortCameraGroup(pg.sprite.Group):
